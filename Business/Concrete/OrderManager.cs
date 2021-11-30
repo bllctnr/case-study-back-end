@@ -61,8 +61,19 @@ namespace Business.Concrete
         {
             Order orderToDelete = _orderDal.Get(o => o.Id == orderId);
             _orderDal.Delete(orderToDelete);
+
             return new SuccessResult(Messages.RecordsDeleted);
         }
+
+
+        //Will be implemented
+        [SecuredOperation("order.update, admin")]
+        public IResult Update(int orderId, Order order)
+        {
+            
+            throw new NotImplementedException();
+        }
+
 
         [SecuredOperation("order.get, admin")]
         public IDataResult<List<OrderForListDto>> GetAll()
@@ -88,13 +99,7 @@ namespace Business.Concrete
             return new ErrorDataResult<List<OrderProductDto>>(null, Messages.RecordNotFount);
         }
 
-        [SecuredOperation("order.update, admin")]
-        public IResult Update(int orderId, Order order)
-        {
-            order.Id = orderId;
-            _orderDal.Update(order);
-            return new SuccessResult(Messages.RecordsUpdated);
-        }
+  
 
         private IResult UpdateStocks(List<OrderProductDto> productsWithOrderInfo)
         {
@@ -144,8 +149,9 @@ namespace Business.Concrete
 
             if (result.Count > 0)
             {
-                return new ErrorDataResult<List<OrderProductDto>>(result, Messages.OutOfStockItemsInOrder);
+                return new ErrorResult(Messages.OutOfStockItemsInOrder);
             }
+
             return new SuccessResult();
         }
 

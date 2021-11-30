@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.BusinessAspects.Autofac;
 using Business.Constants;
 using Core.Results;
 using DataAccess.Abstract;
@@ -23,6 +24,7 @@ namespace Business.Concrete
             return new SuccessResult(Messages.UserRegistered);
         }
 
+        [SecuredOperation("admin")]
         public IResult Delete(int userId)
         {
             User userToDelete = _userDal.Get(u => u.Id == userId);
@@ -31,6 +33,7 @@ namespace Business.Concrete
             return new SuccessResult(Messages.RecordsDeleted);
         }
 
+        [SecuredOperation("admin")]
         public IDataResult<List<User>> GetAll()
         {
             return new SuccessDataResult<List<User>>(_userDal.GetAll(), Messages.RecordsListed);
@@ -41,6 +44,7 @@ namespace Business.Concrete
             return _userDal.Get(u => u.Email == email);
         }
 
+        [SecuredOperation("admin")]
         public IDataResult<User> GetById(int userId)
         {
             return new SuccessDataResult<User>(_userDal.Get(u => u.Id == userId), Messages.RecordsListed);
@@ -53,8 +57,12 @@ namespace Business.Concrete
 
         public IResult Update(int userId, User user)
         {
-            user.Id = userId;
-            _userDal.Update(user);
+            User userToUpdate = _userDal.Get(u => u.Id == userId);
+            userToUpdate.FirstName = user.FirstName;
+            userToUpdate.LastName = user.LastName;
+            userToUpdate.Email = user.Email;
+            _userDal.Update(userToUpdate);
+
             return new SuccessResult(Messages.RecordsUpdated);
         }
     }

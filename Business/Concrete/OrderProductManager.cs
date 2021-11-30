@@ -27,6 +27,7 @@ namespace Business.Concrete
         public IResult Add(OrderProduct orderProduct)
         {
             _orderProductDal.Add(orderProduct);
+
             return new SuccessResult(Messages.RecordsAdded);
         }
 
@@ -35,6 +36,7 @@ namespace Business.Concrete
         {
             var orderProductToDelete = _orderProductDal.Get(o => o.Id == orderProductId);
             _orderProductDal.Delete(orderProductToDelete);
+
             return new SuccessResult(Messages.RecordsDeleted);
         }
 
@@ -54,8 +56,11 @@ namespace Business.Concrete
         [ValidationAspect(typeof(ProductValidator))]
         public IResult Update(int orderProductId, OrderProduct orderProduct)
         {
-            orderProduct.Id = orderProductId;
-            _orderProductDal.Update(orderProduct);
+            OrderProduct orderProductToUpdate = _orderProductDal.Get(oP => oP.Id == orderProductId);
+            orderProductToUpdate.OrderAmount = orderProduct.OrderAmount;
+            orderProductToUpdate.Price = orderProduct.Price;
+            _orderProductDal.Update(orderProductToUpdate);
+
             return new SuccessResult(Messages.RecordsUpdated);
         }
 

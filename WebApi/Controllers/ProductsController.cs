@@ -24,7 +24,7 @@ namespace WebApi.Controllers
                 return Ok(result);
             }
 
-            return BadRequest(result.Message);
+            return BadRequest(result);
         }
 
         [HttpGet("{productId:int}")]

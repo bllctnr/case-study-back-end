@@ -26,7 +26,7 @@ namespace WebApi.Controllers
                 return Ok(result);
             }
 
-            return BadRequest(result.Message);
+            return BadRequest(result);
         }
 
         [HttpGet("{orderId:int}")]
@@ -38,7 +38,7 @@ namespace WebApi.Controllers
                 return Ok(result);
             }
 
-            return BadRequest(result.Message);
+            return BadRequest(result);
         }
 
         [HttpGet("{orderId:int}/products")]
@@ -50,7 +50,7 @@ namespace WebApi.Controllers
                 return Ok(result);
             }
 
-            return BadRequest(result.Message);
+            return BadRequest(result);
         }
 
         [HttpPost]
@@ -62,7 +62,7 @@ namespace WebApi.Controllers
                 return Ok(result);
             }
 
-            return BadRequest(result.Message);
+            return BadRequest(result);
         }
 
         [HttpPut("{orderId:int}")]
@@ -74,7 +74,7 @@ namespace WebApi.Controllers
                 return Ok(result);
             }
 
-            return BadRequest(result.Message);
+            return BadRequest(result);
         }
 
         [HttpDelete("{orderId:int}")]
@@ -86,7 +86,7 @@ namespace WebApi.Controllers
                 return Ok(result);
             }
 
-            return BadRequest(result.Message);
+            return BadRequest(result);
         }
 
 
